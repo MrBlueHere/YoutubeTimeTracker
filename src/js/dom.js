@@ -12,6 +12,7 @@ import {
 import { readData } from './tracker';
 import { getCookie, setCookie } from './helpers/cookie';
 import { log } from './helpers/log';
+import { readLimits } from './tracker';
 
 const timerBlock = function() {
   const logo = document.getElementById("logo");
@@ -37,6 +38,12 @@ const timerBlock = function() {
             <ul class="youtube-time-tracker__stats">
             </ul>
 
+            <ul class="youtube-time-tracker__timelimit">
+                <label for="time-limit-input">Day watch time limit in hours:</label>
+                <input type="number" id="time-limit-input" name="time-limit-input" max=24 min=0 step=0.01>
+                <button id="submit-time-limit">Submit</button>
+            </ul>
+
             <div class="youtube-time-tracker__links">
               <a class="youtube-time-tracker__link secondary-link"
                 href="https://github.com/makaroni4/youtube_time_tracker"
@@ -53,22 +60,7 @@ const timerBlock = function() {
           </div>
 
           <div class="youtube-time-tracker__rating">
-            <div class="youtube-time-tracker__rating-description">
-              If you like the extension – please, spread the word & rate it in Chrome Web Store:
-            </div>
-
-            <div class="youtube-time-tracker__rating-cta">
-              <a href="http://bit.ly/rate-YTT"
-                 class="youtube-time-tracker__rating-button js-ytt-rating"
-                 target="_blank">
-                RATE IT
-              </a>
-
-              <a href="#"
-                 class="secondary-link youtube-time-tracker__rating-later js-hide-ytt-rating">
-                Later
-              </a>
-            </div>
+           
           </div>
         </div>
       </div>
@@ -78,30 +70,6 @@ const timerBlock = function() {
     timer.className = "youtube-time-tracker";
 
     logo.parentNode.insertBefore(timer, logo.nextSibling);
-
-    const ratingBlock = document.querySelector(".youtube-time-tracker__rating");
-    const ratingLink = ratingBlock.querySelector(".js-ytt-rating");
-    const closeLink = ratingBlock.querySelector(".js-hide-ytt-rating");
-    const ratingCookie = "ytt-rating";
-    const disableRatingBlock = () => {
-      ratingBlock.remove();
-
-      setCookie(ratingCookie, true, 180);
-    }
-
-    if(!getCookie(ratingCookie)) {
-      ratingBlock.classList.add("youtube-time-tracker__rating--active");
-    }
-
-    ratingBlock.addEventListener("click", function(e) {
-      disableRatingBlock();
-    });
-
-    closeLink.addEventListener("click", function(e) {
-      e.preventDefault();
-
-      disableRatingBlock();
-    });
   }
 
   return timer;
@@ -195,4 +163,31 @@ export const renderTimer = function(timerData) {
       });
     }
   }
+}
+
+export const renderTimerFirstTime = function() {
+  readLimits(function(limits) {
+    let submitInput = document.getElementById("time-limit-input");
+    submitInput.value = limits / 60;
+  });
+
+  bindEvents();
+}
+
+export const bindEvents = function () {
+  let submitBtn = document.getElementById("submit-time-limit");
+
+  submitBtn.onclick = function() { persistLimits(); };
+}
+
+function persistLimits () {
+  const TRACKER_STORAGE_LIMITS = "youtube_time_tracker_limits";
+
+  let limitsInHours = document.getElementById('time-limit-input').value;
+  let limitsInMinutes = limitsInHours * 60;
+
+  chrome.storage.local.set({ [TRACKER_STORAGE_LIMITS]: limitsInMinutes }, function () {
+      log('YouTube Time Tracker limit is set to:');
+      log(limitsInMinutes);
+  });
 }

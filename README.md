@@ -1,5 +1,11 @@
 # YouTube™ Time Tracker [![Build Status](https://travis-ci.org/makaroni4/youtube_time_tracker.svg?branch=master)](https://travis-ci.org/makaroni4/youtube_time_tracker) [![Add to Chrome](https://user-images.githubusercontent.com/768070/51865757-87d45300-2347-11e9-84fd-bafff5b036b2.png)](https://chrome.google.com/webstore/detail/youtube-time-tracker/gadnhdhegigkbjiebmcceodbablkdjmo)
 
+Cloned from [Project](https://github.com/makaroni4/youtube_time_tracker) made by [makaroni4](https://github.com/makaroni4)
+
+I've wanted to build upon the original project but unfortunately it seems inactive, that's why I've created this clone. Any help is welcomed.
+
+======
+
 YouTube™ Time Tracker is a Chrome Extension that tracks time you spent on YouTube. It's important to notice that it uses only local [chrome.storage API](https://developer.chrome.com/apps/storage) to store data and it __**does't send  data anywhere**__ :warning:.
 
 ![YouTube™ Time Tracker screenshots](https://user-images.githubusercontent.com/768070/51443822-ed449600-1cee-11e9-90d9-40a597ef512a.jpg)
