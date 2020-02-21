@@ -46,7 +46,7 @@ const timerBlock = function() {
 
             <div class="youtube-time-tracker__links">
               <a class="youtube-time-tracker__link secondary-link"
-                href="https://github.com/makaroni4/youtube_time_tracker"
+                href="https://github.com/MrBlueHere/YoutubeTimeTracker"
                 target="_blank">
                 Source code
               </a>
