@@ -38,6 +38,6 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "node-sass": "^4.13.1"
+    "node-sass": "^7.0.0"
   }
 }
